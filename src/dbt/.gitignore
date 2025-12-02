@@ -1,0 +1,9 @@
+target/
+dbt_packages/
+*.pyc
+.env
+*service-account*.json
+.DS_Store
+__pycache__/
+.user.yml
+logs/dbt.log

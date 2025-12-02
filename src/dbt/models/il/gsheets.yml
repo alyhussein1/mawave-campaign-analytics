@@ -1,0 +1,19 @@
+version: 2
+sources:
+  - name: gsheets
+    description: Raw data from Google Sheets uploaded to BigQuery
+    database: "mawave-project"
+    schema: il
+    tables:
+    - name: campaigns
+      description: Campaign performance data
+    - name: clients
+      description: Client general data
+    - name: employees
+      description: Employee records
+    - name: projects
+      description: Project information
+    - name: social_metrics
+      description: Social media performance data
+    - name: time_tracking
+      description: Employee time tracking data

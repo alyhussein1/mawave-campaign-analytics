@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: cl_clients
+    description: "Client relevant information such as industry and country."
+
+    columns:
+      - name: client_id
+        description: "Unique identifier for the client."
+        tests:
+          - not_null
+          - unique
+      - name: client_name
+        description: "Name of the client."
+      - name: primary_industry
+        description: "Client's primary industry with emojis removed."
+      - name: secondary_industry
+        description: "Client's secondary industry with emojis removed (if present)."
+      - name: country
+        description: "Country where the client is located."

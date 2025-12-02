@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: cl_time_tracking
+    description: "Table containing employee work hours, cost, and productivity data."
+
+    columns:
+      - name: employee_id
+        description: "Unique identifier for the employee."
+        tests:
+          - not_null
+      - name: employee_name
+        description: "Full name of the employee."
+      - name: client_id
+        description: "Identifier for the client associated with the work entry."
+        tests:
+          - not_null
+      - name: client_name
+        description: "Name of the client."
+      - name: report_date
+        description: "Date the work was reported."
+        tests:
+          - not_null
+      - name: hours_worked
+        description: "Number of hours worked by the employee on this date."
+      - name: department_name
+        description: "Department of the employee."
+      - name: cost_eur
+        description: "Cost in EUR for the hours worked."
+      - name: is_productive
+        description: "Boolean flag indicating whether the hours are considered productive."

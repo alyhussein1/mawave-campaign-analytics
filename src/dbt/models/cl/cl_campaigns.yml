@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: cl_campaigns
+    description: "Campaigns data"
+
+    columns:
+      - name: start_date
+        description: "Campaign start date parsed in DD.MM.YYYY format."
+        tests:
+          - not_null
+      - name: campaign_id
+        description: "Unique campaign identifier."
+        tests:
+          - not_null
+          - unique
+      - name: client_id
+        description: "Client identifier linked to the campaign."
+        tests:
+          - not_null
+      - name: client_name
+        description: "Name of the client running the campaign."
+      - name: campaign_name
+        description: "Name of the marketing campaign."
+      - name: platform
+        description: "Platform where the campaign is running (e.g. TikTok Ads, Meta)."
+      - name: campaign_status
+        description: "Current status of the campaign."
+      - name: daily_budget_eur
+        description: "Daily budget allocated to the campaign in EUR."

@@ -1,0 +1,21 @@
+mawave_project:
+  target: dev # default target environment
+  outputs:
+    prod:
+      type: bigquery
+      method: service-account
+      keyfile: "{{ env_var('BQ_SERVICE_ACCOUNT') }}"
+      project: mawave-project
+      dataset: prod
+      threads: 10
+      priority: interactive
+      location: EU
+    dev:
+      type: bigquery
+      method: service-account
+      keyfile: "{{ env_var('BQ_SERVICE_ACCOUNT') }}"
+      project: mawave-project
+      dataset: dev
+      threads: 10
+      priority: interactive
+      location: EU

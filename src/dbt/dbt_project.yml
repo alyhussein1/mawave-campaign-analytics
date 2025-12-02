@@ -1,0 +1,48 @@
+name: "mawave_project"
+version: "1.0.0"
+profile: "mawave_project"
+
+# Config specifying where dbt should look for different types of files.
+model-paths: ["models"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+target-path: "target"
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+vars:
+  start_date: "2024-01-01"
+
+models:
+  mawave_project:
+    +persist_docs:
+      relation: true
+      columns: true
+
+    cl:
+      materialized: table
+      tags: cl
+      schema: cl
+      +required_docs: true
+      +required_tests:
+        ".*unique.*": 1
+        ".*null.*": 1
+
+    ol:
+      materialized: table
+      tags: ol
+      schema: ol
+      +required_tests:
+        ".*unique.*": 1
+        ".*null.*": 1
+
+    bl:
+      materialized: table
+      tags: bl
+      schema: bl
+      +required_tests:
+        ".*unique.*": 1
+        ".*null.*": 1

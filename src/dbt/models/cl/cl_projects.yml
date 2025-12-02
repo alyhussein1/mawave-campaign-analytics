@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: cl_projects
+    description: "Project dimension table with client, timing, and budget metadata."
+    tags:
+      - cl
+      - projects
+    config:
+      materialized: table
+      unique_key: project_id
+
+    columns:
+      - name: project_id
+        description: "Unique identifier for the project. Note: project & client IDs are the same."
+        tests:
+          - not_null
+          - unique
+      - name: client_id
+        description: "Identifier of the client associated with the project."
+        tests:
+          - not_null
+      - name: client_name
+        description: "Name of the client for this project."
+      - name: project_name
+        description: "Name of the project."
+      - name: project_start_date
+        description: "Date the project began."
+      - name: project_end_date
+        description: "Date the project ended or is expected to end."
+      - name: monthly_budget_eur
+        description: "Monthly project budget in EUR."

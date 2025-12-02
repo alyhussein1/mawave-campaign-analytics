@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: cl_social_metrics
+    description: "Table containing social media metrics per client, platform, and report date."
+    columns:
+      - name: client_id
+        description: "Unique identifier for the client."
+        tests:
+          - not_null
+      - name: client_name
+        description: "Name of the client."
+      - name: report_date
+        description: "Date the social metrics were reported."
+        tests:
+          - not_null
+      - name: platform
+        description: "Social media platform (e.g., Facebook, Instagram)."
+      - name: engaged_users
+        description: "Number of engaged users."
+      - name: new_followers
+        description: "Number of new followers gained."
+      - name: total_followers
+        description: "Total number of followers at report date."
+      - name: impressions
+        description: "Total number of impressions."
+      - name: organic_impressions
+        description: "Number of organic impressions."
+      - name: profile_views
+        description: "Number of profile views."
+      - name: website_clicks
+        description: "Number of website clicks from the platform."

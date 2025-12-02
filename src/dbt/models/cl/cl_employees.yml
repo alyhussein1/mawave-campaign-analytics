@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: cl_employees
+    description: "Employees table containing employee metadata including department, team, rates, and status."
+
+    columns:
+      - name: employee_id
+        description: "Unique identifier for the employee."
+        tests:
+          - not_null
+          - unique
+      - name: employee_name
+        description: "Full name of the employee."
+      - name: department_name
+        description: "Name of the department the employee belongs to."
+      - name: team_name
+        description: "Name of the team the employee works in."
+      - name: hourly_rate_eur
+        description: "Employee hourly rate in EUR."
+      - name: status
+        description: "Employment status (e.g., active, inactive)."
