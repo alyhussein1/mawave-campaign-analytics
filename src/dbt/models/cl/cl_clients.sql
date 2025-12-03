@@ -4,7 +4,7 @@
     tags = ["cl", "clients"]
 ) }}
 
-WITH import_il_clients AS (SELECT * FROM {{ source('gsheets', 'clients') }}),
+WITH import_il_clients AS (SELECT * FROM {{ source('csv', 'clients') }}),
 
 cleaned AS (
 

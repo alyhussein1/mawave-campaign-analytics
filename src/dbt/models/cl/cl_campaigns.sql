@@ -6,7 +6,7 @@
 
 WITH
 
-import_il_campaigns AS (SELECT * FROM {{ source('gsheets', 'campaigns') }})
+import_il_campaigns AS (SELECT * FROM {{ source('csv', 'campaigns') }})
 
 SELECT
 
@@ -17,6 +17,6 @@ SELECT
     campaign_name,
     platform,
     campaign_status,
-    CAST(daily_budget_eur AS NUMERIC)       AS daily_budget_eur
+    CAST(daily_budget_eur AS INT64)        AS daily_budget_eur
 
 FROM import_il_campaigns

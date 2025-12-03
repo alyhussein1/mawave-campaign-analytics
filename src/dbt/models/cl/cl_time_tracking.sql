@@ -4,7 +4,7 @@
     tags = ["cl", "time_tracking"]
 ) }}
 
-WITH import_il_time_tracking AS (SELECT * FROM {{ source('gsheets', 'time_tracking') }})
+WITH import_il_time_tracking AS (SELECT * FROM {{ source('csv', 'time_tracking') }})
 
 SELECT
 

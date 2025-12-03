@@ -4,7 +4,7 @@
     tags = ["cl", "social_metrics"]
 ) }}
 
-WITH import_il_social_metrics AS (SELECT * FROM {{ source('gsheets', 'social_metrics') }})
+WITH import_il_social_metrics AS (SELECT * FROM {{ source('csv', 'social_metrics') }})
 
 SELECT
 

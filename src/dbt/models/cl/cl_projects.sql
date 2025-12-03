@@ -4,7 +4,7 @@
     tags = ["cl", "projects"]
 ) }}
 
-WITH import_il_projects AS (SELECT * FROM {{ source('gsheets', 'projects') }})
+WITH import_il_projects AS (SELECT * FROM {{ source('csv', 'projects') }})
 
 SELECT
 

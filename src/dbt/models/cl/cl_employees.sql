@@ -4,7 +4,7 @@
     tags = ["cl", "employees"]
 ) }}
 
-WITH import_il_employees AS (SELECT * FROM {{ source('gsheets', 'employees') }})
+WITH import_il_employees AS (SELECT * FROM {{ source('csv', 'employees') }})
 
 SELECT
 
@@ -12,7 +12,7 @@ SELECT
     employee_name,
     department_name,
     team_name,
-    CAST(hourly_rate_eur AS NUMERIC)   AS hourly_rate_eur,
+    CAST(hourly_rate_eur AS INT64)     AS hourly_rate_eur,
     status
 
 FROM import_il_employees
