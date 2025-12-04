@@ -1,0 +1,41 @@
+version: 2
+
+models:
+  - name: ol_unified_ad_metrics
+    description: "Campaign-level social metrics enriched with campaign metadata."
+    columns:
+      - name: campaign_id
+        description: "Unique identifier of the campaign."
+        tests:
+          - unique
+          - not_null
+      - name: campaign_name
+        description: "Campaign name."
+      - name: client_id
+        description: "ID of the client."
+      - name: client_name
+        description: "Client name."
+      - name: platform
+        description: "Social media platform."
+      - name: campaign_status
+        description: "Current status of the campaign."
+      - name: start_date
+        description: "Campaign start date."
+      - name: daily_budget_eur
+        description: "Daily budget in EUR."
+      - name: report_date
+        description: "Reporting date for the social metrics."
+      - name: report_month
+        description: "Month extracted from report_date."
+      - name: engaged_users
+        description: "Number of engaged users."
+      - name: new_followers
+        description: "New followers acquired."
+      - name: impressions
+        description: "Total impressions."
+      - name: website_clicks
+        description: "Number of website clicks."
+      - name: engagement_rate
+        description: "Engaged users / Impressions."
+      - name: click_rate
+        description: "Website clicks / Impressions."

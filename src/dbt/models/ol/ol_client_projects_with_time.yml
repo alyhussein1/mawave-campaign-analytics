@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: ol_client_projects_with_time
+    description: "Aggregated project performance metrics including time tracking, cost, and productivity."
+    columns:
+      - name: project_id
+        description: "Unique project identifier."
+        tests:
+          - unique
+          - not_null
+      - name: project_name
+        description: "Name of the project."
+      - name: client_id
+        description: "Identifier of the client associated with the project."
+      - name: client_name
+        description: "Client name."
+      - name: project_start_date
+        description: "Start date of the project."
+      - name: project_end_date
+        description: "End date of the project; may be null for ongoing projects."
+      - name: monthly_budget_eur
+        description: "Monthly budget for the project in EUR."
+      - name: employee_count
+        description: "Number of distinct employees who logged time on the project."
+      - name: total_hours
+        description: "Total hours worked on the project."
+      - name: productive_hours
+        description: "Total hours marked as productive."
+      - name: total_cost_eur
+        description: "Sum of cost in EUR for all time tracking entries."
+      - name: productivity_rate
+        description: "Productive hours divided by total hours."
+      - name: report_date
+        description: "The reporting date associated with each time tracking entry."
