@@ -17,3 +17,5 @@ sources:
       description: Social media performance data
     - name: time_tracking
       description: Employee time tracking data
+    - name: ad_metrics
+      description: Ad metrics data

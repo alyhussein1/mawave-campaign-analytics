@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: ad_metrics
+    description: "Cleaned and typed advertising performance metrics aggregated by campaign, platform, and attribution window."
+    columns:
+      - name: campaign_id
+        description: "Unique identifier of the campaign."
+        tests:
+          - not_null
+      - name: client_id
+        description: "Unique identifier of the client."
+      - name: client_name
+        description: "Name of the client."
+      - name: platform
+        description: "Ad platform the metrics refer to (e.g., Meta Ads)."
+      - name: report_date
+        description: "Date for which metrics are reported."
+        tests:
+          - not_null
+      - name: attribution_window
+        description: "Attribution window used for measuring conversions."
+      - name: spend_eur
+        description: "Total ad spend in euros."
+      - name: impressions
+        description: "Number of impressions delivered."
+      - name: clicks
+        description: "Number of clicks received."
+      - name: conversions
+        description: "Number of conversions."
+      - name: cpm
+        description: "Cost per thousand impressions."
+      - name: ctr
+        description: "Click-through rate."
+      - name: cvr
+        description: "Conversion rate."
+      - name: cpc
+        description: "Cost per click."
+      - name: cpa
+        description: "Cost per acquisition."
+      - name: revenue_eur
+        description: "Attributed revenue generated, in euros."
+      - name: roas
+        description: "Return on ad spend."
