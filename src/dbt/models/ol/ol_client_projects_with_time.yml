@@ -2,34 +2,38 @@ version: 2
 
 models:
   - name: ol_client_projects_with_time
-    description: "Aggregated project performance metrics including time tracking, cost, and productivity."
+    description: "Project-level model combining project attributes with client metadata and calculated timelines and budgets."
     columns:
       - name: project_id
-        description: "Unique project identifier."
+        description: "Unique identifier of the project."
         tests:
-          - unique
           - not_null
+          - unique
       - name: project_name
         description: "Name of the project."
       - name: client_id
-        description: "Identifier of the client associated with the project."
+        description: "Unique identifier of the client associated with the project."
+        tests:
+          - not_null
       - name: client_name
-        description: "Client name."
+        description: "Name of the client."
+      - name: primary_industry
+        description: "Primary industry of the client."
+      - name: secondary_industry
+        description: "Secondary industry of the client."
+      - name: country
+        description: "Country of the client."
       - name: project_start_date
         description: "Start date of the project."
       - name: project_end_date
-        description: "End date of the project; may be null for ongoing projects."
+        description: "End date of the project."
+      - name: project_duration_days
+        description: "Duration of the project expressed in days."
+      - name: project_duration_months
+        description: "Duration of the project expressed in months."
       - name: monthly_budget_eur
-        description: "Monthly budget for the project in EUR."
-      - name: employee_count
-        description: "Number of distinct employees who logged time on the project."
-      - name: total_hours
-        description: "Total hours worked on the project."
-      - name: productive_hours
-        description: "Total hours marked as productive."
-      - name: total_cost_eur
-        description: "Sum of cost in EUR for all time tracking entries."
-      - name: productivity_rate
-        description: "Productive hours divided by total hours."
-      - name: report_date
-        description: "The reporting date associated with each time tracking entry."
+        description: "The monthly allocated budget for the project."
+      - name: total_budget_eur
+        description: "Total budget calculated as monthly budget multiplied by project duration in months."
+      - name: project_status
+        description: "Current status of the project (Not Started, In Progress, Completed)."

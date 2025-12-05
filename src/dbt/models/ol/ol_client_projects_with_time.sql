@@ -1,38 +1,41 @@
 {{ config(
     materialized = 'table',
+    unique_key = 'project_id',
     tags = ["ol", "projects"]
 ) }}
 
-WITH import_projects AS (SELECT * FROM {{ ref('cl_projects') }}),
-import_time_tracking AS (SELECT * FROM {{ ref('cl_time_tracking') }})
+WITH import_il_projects AS (SELECT * FROM {{ ref('cl_projects') }}),
+import_il_clients AS (SELECT * FROM {{ ref('cl_clients') }})
 
 SELECT
 
+    /* PROJECT ATTRIBUTES */
     p.project_id,
     p.project_name,
     p.client_id,
-    p.client_name,
+    c.client_name,
+    c.primary_industry,
+    c.secondary_industry,
+    c.country,
+    
+    /* PROJECT TINELINE */
     p.project_start_date,
     p.project_end_date,
+    DATE_DIFF(p.project_end_date, p.project_start_date, DAY)                        AS project_duration_days,
+    DATE_DIFF(p.project_end_date, p.project_start_date, MONTH)                      AS project_duration_months,
+    
+    /* BUDGET INFORMATION */
     p.monthly_budget_eur,
+    p.monthly_budget_eur * DATE_DIFF(p.project_end_date, p.project_start_date, MONTH) AS total_budget_eur,
+    
+    /* PROJECT STATUS */
+    CASE 
+        WHEN CURRENT_DATE() < p.project_start_date THEN 'Not Started'
+        WHEN CURRENT_DATE() BETWEEN p.project_start_date AND p.project_end_date THEN 'In Progress'
+        WHEN CURRENT_DATE() > p.project_end_date THEN 'Completed'
+    END AS project_status
 
-    /* Time aggregations */
-    COUNT(DISTINCT tt.employee_id) AS employee_count,
-    SUM(tt.hours_worked) AS total_hours,
-    SUM(CASE WHEN tt.is_productive THEN tt.hours_worked ELSE 0 END) AS productive_hours,
-
-    /* Cost aggregations */
-    SUM(tt.cost_eur) AS total_cost_eur,
-
-    /* Productivity Rate Calculation */
-    SAFE_DIVIDE(
-        SUM(CASE WHEN tt.is_productive THEN tt.hours_worked ELSE 0 END),
-        SUM(tt.hours_worked)
-    ) AS productivity_rate
-
-FROM import_projects p
-LEFT JOIN import_time_tracking tt
-    ON p.client_id = tt.client_id
-    AND tt.report_date BETWEEN p.project_start_date AND COALESCE(p.project_end_date, CURRENT_DATE())
-
-GROUP BY ALL
+FROM import_il_projects p
+JOIN import_il_clients c 
+    ON p.client_id = c.client_id
+ORDER BY p.project_id

@@ -3,36 +3,63 @@
     tags = ["ol", "metrics"]
 ) }}
 
-WITH import_campaigns AS (SELECT * FROM {{ ref('cl_campaigns') }}),
-import_social_metrics AS (SELECT * FROM {{ ref('cl_social_metrics') }})
+WITH import_cl_campaigns AS (SELECT * FROM {{ ref('cl_campaigns') }}),
+import_cl_clients AS (SELECT * FROM {{ ref('cl_clients') }}),
+import_cl_ad_metrics AS (SELECT * FROM {{ ref('cl_ad_metrics') }})
 
 SELECT
 
-    c.campaign_id,
-    c.campaign_name,
-    c.client_id,
-    c.client_name,
-    c.platform,
-    c.campaign_status,
-    c.start_date,
-    c.daily_budget_eur,
-    
-    sm.report_date,
-    DATE_TRUNC(sm.report_date, MONTH)              AS report_month,
-    
-    /* Metrics */
-    sm.engaged_users,
-    sm.new_followers,
-    sm.impressions,
-    sm.website_clicks,
-    
-    /* Simple calculations */
-    SAFE_DIVIDE(sm.engaged_users, sm.impressions)  AS engagement_rate,
-    SAFE_DIVIDE(sm.website_clicks, sm.impressions) AS click_rate
+    /* TIME DIMENSION */
+    am.report_date,
+    am.attribution_window,
 
-FROM import_campaigns c
-LEFT JOIN import_social_metrics sm
-    ON c.client_id = sm.client_id
-    AND c.platform = sm.platform
-    AND sm.report_date >= c.start_date
-WHERE sm.report_date IS NOT NULL
+    /* CAMPAIGN & CLIENT IDENTIFIERS */
+    am.campaign_id,
+    cam.campaign_name,
+    cam.campaign_status,
+    cam.platform,
+    am.client_id,
+    c.client_name,
+    c.primary_industry,
+
+    /* PERFORMANCE METRICS */
+    am.spend_eur,
+    am.impressions,
+    am.clicks,
+    am.conversions,
+    am.revenue_eur,
+
+    /* CALCULATED EFFICIENCY METRICS */
+    am.cpm,
+    am.ctr,
+    am.cvr,
+    am.cpc,
+    am.cpa,
+    am.roas,
+
+    /* PROFITABILITY METRICS */
+    am.revenue_eur - am.spend_eur AS profit_eur,
+    SAFE_DIVIDE(am.revenue_eur - am.spend_eur, am.spend_eur) * 100 AS profit_margin_pct,
+
+    /* PERFORMANCE INDICATORS */
+    CASE
+        WHEN am.roas >= 4 THEN 'Excellent'
+        WHEN am.roas >= 2 THEN 'Good'
+        WHEN am.roas >= 1 THEN 'Marginal'
+        ELSE 'Poor'
+    END AS performance_tier,
+
+    CASE
+        WHEN am.revenue_eur > am.spend_eur THEN 'Profitable'
+        WHEN am.revenue_eur = am.spend_eur THEN 'Break-even'
+        ELSE 'Loss'
+    END AS profitability_status
+
+FROM import_cl_ad_metrics am
+JOIN import_cl_campaigns cam 
+    ON am.campaign_id = cam.campaign_id
+JOIN import_cl_clients c 
+    ON am.client_id = c.client_id
+/* Filtering on standard attribution window */ 
+WHERE am.attribution_window = '7d_click'
+ORDER BY 1, 3

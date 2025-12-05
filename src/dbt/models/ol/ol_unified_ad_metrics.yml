@@ -2,40 +2,60 @@ version: 2
 
 models:
   - name: ol_unified_ad_metrics
-    description: "Campaign-level social metrics enriched with campaign metadata."
+    description: "Aggregated ad performance metrics enriched with campaign and client metadata, including efficiency, profitability, and performance classifications."
+
     columns:
-      - name: campaign_id
-        description: "Unique identifier of the campaign."
+      - name: report_date
+        description: "Date of the metric record."
         tests:
-          - unique
+          - not_null
+      - name: attribution_window
+        description: "Attribution window used for the metrics (filtered to '7d_click')."
+      - name: campaign_id
+        description: "Unique identifier for the campaign."
+        tests:
           - not_null
       - name: campaign_name
-        description: "Campaign name."
-      - name: client_id
-        description: "ID of the client."
-      - name: client_name
-        description: "Client name."
-      - name: platform
-        description: "Social media platform."
+        description: "Name of the campaign."
       - name: campaign_status
-        description: "Current status of the campaign."
-      - name: start_date
-        description: "Campaign start date."
-      - name: daily_budget_eur
-        description: "Daily budget in EUR."
-      - name: report_date
-        description: "Reporting date for the social metrics."
-      - name: report_month
-        description: "Month extracted from report_date."
-      - name: engaged_users
-        description: "Number of engaged users."
-      - name: new_followers
-        description: "New followers acquired."
+        description: "Current status of the campaign (active, paused, etc.)."
+      - name: platform
+        description: "Advertising platform of the campaign."
+      - name: client_id
+        description: "Unique identifier for the client."
+        tests:
+          - not_null
+      - name: client_name
+        description: "Name of the client."
+      - name: primary_industry
+        description: "Primary industry of the client."
+      - name: spend_eur
+        description: "Total ad spend in EUR."
       - name: impressions
-        description: "Total impressions."
-      - name: website_clicks
-        description: "Number of website clicks."
-      - name: engagement_rate
-        description: "Engaged users / Impressions."
-      - name: click_rate
-        description: "Website clicks / Impressions."
+        description: "Number of impressions delivered."
+      - name: clicks
+        description: "Number of clicks generated."
+      - name: conversions
+        description: "Number of attributed conversions."
+      - name: revenue_eur
+        description: "Attributed revenue in EUR."
+      - name: cpm
+        description: "Cost per mille (1,000 impressions)."
+      - name: ctr
+        description: "Click-through rate."
+      - name: cvr
+        description: "Conversion rate."
+      - name: cpc
+        description: "Cost per click."
+      - name: cpa
+        description: "Cost per acquisition."
+      - name: roas
+        description: "Return on ad spend."
+      - name: profit_eur
+        description: "Profit calculated as revenue minus spend."
+      - name: profit_margin_pct
+        description: "Percentage profit margin based on ad spend."
+      - name: performance_tier
+        description: "Categorization of ROAS performance (Excellent, Good, Marginal, Poor)."
+      - name: profitability_status
+        description: "Indicates whether the campaign is Profitable, Break-even, or running at a Loss."
