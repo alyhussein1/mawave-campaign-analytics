@@ -20,7 +20,7 @@ campaign_spend AS (
         SUM(revenue_eur)    AS total_revenue,
         SUM(conversions)    AS total_conversions
 
-    FROM ad_metrics
+    FROM import_cl_ad_metrics
     WHERE attribution_window = '7d_click'
     GROUP BY campaign_id, client_id
 ),
@@ -34,7 +34,7 @@ client_time_costs AS (
         SUM(cost_eur)       AS total_internal_cost,
         SUM(hours_worked)   AS total_hours
 
-    FROM time_tracking
+    FROM import_cl_time_tracking
     WHERE is_productive = TRUE
     GROUP BY client_id
 )
@@ -70,9 +70,9 @@ SELECT
     END AS profit_margin_pct
 
 FROM campaign_spend cs
-JOIN campaigns cam 
+JOIN import_cl_campaigns cam 
     ON cs.campaign_id = cam.campaign_id
-JOIN clients c 
+JOIN import_cl_clients c 
     ON cs.client_id = c.client_id
 LEFT JOIN client_time_costs ctc 
     ON cs.client_id = ctc.client_id
