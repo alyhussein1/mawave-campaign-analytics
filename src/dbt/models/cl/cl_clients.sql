@@ -10,9 +10,11 @@ cleaned AS (
 
     SELECT
 
+        /* CLIENT ID & NAME */
         CAST(client_id AS STRING) AS client_id,
         client_name,
 
+        /* ATTRIBUTES */
         /* Remove emojis from primary_industry column & added for secondary_industry column just in case */
         REGEXP_REPLACE(primary_industry, r'[\p{Emoji_Presentation}\p{Extended_Pictographic}]', '')      AS primary_industry,
         REGEXP_REPLACE(secondary_industry, r'[\p{Emoji_Presentation}\p{Extended_Pictographic}]', '')    AS secondary_industry,
