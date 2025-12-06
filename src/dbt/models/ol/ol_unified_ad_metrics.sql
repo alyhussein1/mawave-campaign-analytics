@@ -60,6 +60,6 @@ JOIN import_cl_campaigns cam
     ON am.campaign_id = cam.campaign_id
 JOIN import_cl_clients c 
     ON am.client_id = c.client_id
-/* Filtering on standard attribution window */ 
+/* Filtering on default attribution window */ 
 WHERE am.attribution_window = '7d_click'
 ORDER BY 1, 3
