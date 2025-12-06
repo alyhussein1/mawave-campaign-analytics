@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: bl_resource_utilization
+    description: "Resource utilization dashboard combining employee time tracking and client-level allocation metrics."
+
+    columns:
+      - name: employee_id
+        description: "Unique identifier for the employee."
+        tests:
+          - not_null
+          - unique
+      - name: employee_name
+        description: "Name of the employee."
+      - name: department_name
+        description: "Department the employee belongs to."
+      - name: team_name
+        description: "Team the employee belongs to."
+      - name: hourly_rate_eur
+        description: "Hourly rate of the employee in EUR."
+      - name: client_id
+        description: "Unique identifier for the client."
+        tests:
+          - not_null
+      - name: client_name
+        description: "Name of the client."
+      - name: primary_industry
+        description: "Primary industry of the client."
+      - name: days_worked
+        description: "Number of distinct days worked by the employee for this client."
+      - name: total_hours
+        description: "Total hours worked by the employee for this client."
+      - name: total_cost
+        description: "Total cost of hours worked for this client."
+      - name: productive_hours
+        description: "Total hours marked as productive for this client."
+      - name: first_work_date
+        description: "First date the employee worked for this client."
+      - name: last_work_date
+        description: "Last date the employee worked for this client."
+      - name: pct_of_employee_time
+        description: "Percentage of the employee's total hours allocated to this client."
+      - name: productivity_rate_pct
+        description: "Percentage of hours worked for this client that were productive."
+      - name: total_hours_all_clients
+        description: "Total hours worked by the employee across all clients."
+      - name: total_cost_all_clients
+        description: "Total cost of the employee across all clients."
