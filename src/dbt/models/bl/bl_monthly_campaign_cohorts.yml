@@ -9,7 +9,6 @@ models:
         description: "Unique identifier for the client."
         tests:
           - not_null
-          - relationships:
       - name: client_name
         description: "Name of the client."
       - name: primary_industry

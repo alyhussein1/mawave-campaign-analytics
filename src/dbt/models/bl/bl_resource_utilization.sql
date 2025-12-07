@@ -3,9 +3,9 @@
     tags = ["bl", "resources"]
 ) }}
 
-WITH employees AS (SELECT * FROM {{ ref('cl_employees') }}),
-time_tracking AS (SELECT * FROM {{ ref('cl_time_tracking') }}),
-clients AS (SELECT * FROM {{ ref('cl_clients') }}),
+WITH import_cl_employees AS (SELECT * FROM {{ ref('cl_employees') }}),
+import_cl_time_tracking AS (SELECT * FROM {{ ref('cl_time_tracking') }}),
+import_cl_clients AS (SELECT * FROM {{ ref('cl_clients') }}),
 
 /* Aggregate time by employee and client */
 employee_client_time AS (
@@ -21,7 +21,7 @@ employee_client_time AS (
         MIN(tt.report_date)                                             AS first_work_date,
         MAX(tt.report_date)                                             AS last_work_date
 
-    FROM time_tracking tt
+    FROM import_cl_time_tracking tt
     GROUP BY tt.employee_id, tt.client_id
 ),
 
@@ -34,7 +34,7 @@ employee_totals AS (
         SUM(hours_worked)   AS total_hours_all_clients,
         SUM(cost_eur)       AS total_cost_all_clients
 
-    FROM time_tracking
+    FROM import_cl_time_tracking
     GROUP BY employee_id
 )
 
@@ -78,9 +78,9 @@ SELECT
     et.total_cost_all_clients
 
 FROM employee_client_time ect
-JOIN employees e 
+JOIN import_cl_employees e 
     ON ect.employee_id = e.employee_id
-JOIN clients c 
+JOIN import_cl_clients c 
     ON ect.client_id = c.client_id
 JOIN employee_totals et 
     ON ect.employee_id = et.employee_id

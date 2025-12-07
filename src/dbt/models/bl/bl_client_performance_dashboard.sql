@@ -4,11 +4,9 @@
     tags = ["bl", "dashboard"]
 ) }}
 
-WITH
-
-clients AS (SELECT * FROM {{ ref('cl_clients') }}),
-campaign_profitability AS (SELECT * FROM {{ ref('ol_campaign_profitability') }}),
-client_projects AS (SELECT * FROM {{ ref('ol_client_projects_with_time') }}),
+WITH import_cl_clients AS (SELECT * FROM {{ ref('cl_clients') }}),
+import_ol_campaign_profitability AS (SELECT * FROM {{ ref('ol_campaign_profitability') }}),
+import_ol_client_projects AS (SELECT * FROM {{ ref('ol_client_projects_with_time') }}),
 
 /* Aggregate campaign metrics by client */
 client_campaign_summary AS (
@@ -26,7 +24,7 @@ client_campaign_summary AS (
         SUM(gross_profit)                                                           AS total_profit,
         AVG(profit_margin_pct)                                                      AS avg_profit_margin_pct
     
-    FROM campaign_profitability
+    FROM import_ol_campaign_profitability
     GROUP BY client_id
 ),
 
@@ -40,7 +38,7 @@ client_project_summary AS (
         COUNT(DISTINCT CASE WHEN project_status = 'In Progress' THEN project_id END)    AS active_projects,
         SUM(total_budget_eur)                                                           AS total_project_budget
 
-    FROM client_projects
+    FROM import_ol_client_projects
     GROUP BY client_id
 )
 
@@ -85,7 +83,7 @@ SELECT
         ELSE 'No Data'
     END AS profitability_status
 
-FROM clients c
+FROM import_cl_clients c
 LEFT JOIN client_campaign_summary cs ON c.client_id = cs.client_id
 LEFT JOIN client_project_summary ps ON c.client_id = ps.client_id
 ORDER BY c.client_id

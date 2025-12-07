@@ -3,7 +3,7 @@
     tags = ["bl", "cohorts"]
 ) }}
 
-WITH unified_ad_metrics AS (SELECT * FROM {{ ref('ol_unified_ad_metrics') }}),
+WITH import_ol_unified_ad_metrics AS (SELECT * FROM {{ ref('ol_unified_ad_metrics') }}),
 
 /* Aggregate metrics by client and month */
 monthly_metrics AS (
@@ -24,7 +24,7 @@ monthly_metrics AS (
         AVG(cvr)                        AS avg_cvr,
         AVG(roas)                       AS avg_roas
 
-    FROM unified_ad_metrics
+    FROM import_ol_unified_ad_metrics
     GROUP BY client_id, client_name, primary_industry, DATE_TRUNC(report_date, MONTH)
 ),
 
