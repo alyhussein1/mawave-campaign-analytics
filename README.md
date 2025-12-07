@@ -15,9 +15,62 @@ This project implements a 4-layer dbt architecture:
 - `dev.cl` - Development cleansing layer
 - `dev.ol` - Development operational layer
 - `dev.bl` - Development business layer
-- `prod.cl` - Production cleansing layer
-- `prod.ol` - Production operational layer
-- `prod.bl` - Production business layer
+- `cl` - Production cleansing layer
+- `ol` - Production operational layer
+- `bl` - Production business layer
+
+## Custom Naming Macros
+
+This project uses custom dbt macros to control how tables are named in BigQuery:
+
+### 1. **generate_alias_name.sql** - Clean Table Names
+
+Removes the layer prefix from model file names to create cleaner table names in BigQuery.
+
+**How it works:**
+- Model file: `cl_campaigns.sql`
+- BigQuery table: `campaigns` (prefix `cl_` removed)
+
+**Examples:**
+```
+cl_campaigns.sql       → campaigns
+cl_ad_metrics.sql      → ad_metrics
+ol_unified_ad_metrics.sql → unified_ad_metrics
+bl_client_performance_dashboard.sql → client_performance_dashboard
+```
+
+**Rules:**
+1. If you set a custom alias explicitly (`{{ config(alias='my_custom_name') }}`), it will be used
+2. Otherwise, everything after the first underscore becomes the table name
+3. If no underscore exists, the full file name is used
+
+### 2. **generate_schema_name.sql** - Environment-Based Schemas
+
+Controls schema naming based on the target environment (dev vs prod).
+
+**How it works:**
+
+**In Production (`--target prod`):**
+```
+Model: cl_campaigns.sql with schema: cl
+→ Table location: prod.cl.campaigns
+```
+
+**In Development (default or `--target dev`):**
+```
+Model: cl_campaigns.sql with schema: cl
+→ Table location: dev.dev_cl.campaigns
+```
+
+**Rules:**
+- **Production:** Models use their schema name directly (`cl`, `ol`, `bl`)
+- **Non-Production:** Target schema is prefixed with schema name (`dev_cl`, `dev_ol`, `dev_bl`)
+
+**Why This Matters:**
+- Keeps dev and prod environments clearly separated
+- Prevents accidental overwrites of production tables
+- Allows testing in dev without affecting prod data
+- Clean table names in production without prefixes
 
 ## Project Structure
 
