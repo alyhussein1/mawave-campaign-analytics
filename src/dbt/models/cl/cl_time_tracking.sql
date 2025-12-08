@@ -1,6 +1,5 @@
 {{ config(
     materialized = 'table',
-    unique_key = 'employee_id',
     tags = ["cl", "time_tracking"]
 ) }}
 

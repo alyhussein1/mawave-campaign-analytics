@@ -3,6 +3,12 @@ version: 2
 models:
   - name: cl_social_metrics
     description: "Table containing social media metrics per client, platform, and report date."
+    tests:
+      - dbt_expectations.expect_compound_columns_to_be_unique:
+          column_list:
+            - client_id
+            - platform
+            - report_date
     columns:
       - name: client_id
         description: "Unique identifier for the client."

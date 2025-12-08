@@ -1,8 +1,14 @@
 version: 2
 
 models:
-  - name: ad_metrics
+  - name: cl_ad_metrics
     description: "Cleaned and typed advertising performance metrics aggregated by campaign, platform, and attribution window."
+    tests:
+      - dbt_expectations.expect_compound_columns_to_be_unique:
+          column_list:
+            - campaign_id
+            - report_date
+            - attribution_window
     columns:
       - name: campaign_id
         description: "Unique identifier of the campaign."

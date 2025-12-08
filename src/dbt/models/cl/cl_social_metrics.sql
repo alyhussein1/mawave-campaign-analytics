@@ -1,6 +1,5 @@
 {{ config(
     materialized = 'table',
-    unique_key = 'client_id',
     tags = ["cl", "social_metrics"]
 ) }}
 
