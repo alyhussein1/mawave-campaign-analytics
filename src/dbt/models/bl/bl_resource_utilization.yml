@@ -3,7 +3,11 @@ version: 2
 models:
   - name: bl_resource_utilization
     description: "Resource utilization dashboard combining employee time tracking and client-level allocation metrics."
-
+    tests:
+      - dbt_expectations.expect_compound_columns_to_be_unique:
+          column_list:
+            - employee_id
+            - client_id
     columns:
       - name: employee_id
         description: "Unique identifier for the employee."

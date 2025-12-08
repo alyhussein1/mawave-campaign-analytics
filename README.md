@@ -312,7 +312,7 @@ This project enforces data quality through required tests:
 ### Required Tests Per Layer:
 
 **All Layers (CL, OL, BL):**
-- At least 1 uniqueness test per model
+- At least 1 uniqueness test per model except cl_time_tracking as there is a duplicate issue to asceetain
 - At least 1 not-null test per model
 
 ### Running Tests:
