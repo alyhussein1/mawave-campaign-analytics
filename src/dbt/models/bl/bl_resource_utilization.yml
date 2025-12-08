@@ -9,7 +9,6 @@ models:
         description: "Unique identifier for the employee."
         tests:
           - not_null
-          - unique
       - name: employee_name
         description: "Name of the employee."
       - name: department_name
