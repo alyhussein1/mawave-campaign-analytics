@@ -1,4 +1,4 @@
-# Campaign Performance Dashboard --> dbt Project
+# Mawave Analytics --> dbt Project
 
 A multi-layered dbt data product that unifies advertising metrics, internal costs, and resource allocation to provide true campaign profitability insights.
 
@@ -15,6 +15,7 @@ This project implements a 4-layer dbt architecture:
 - `dev.cl` - Development cleansing layer
 - `dev.ol` - Development operational layer
 - `dev.bl` - Development business layer
+- `il` - Production ingestion layer
 - `cl` - Production cleansing layer
 - `ol` - Production operational layer
 - `bl` - Production business layer
@@ -33,10 +34,10 @@ Removes the layer prefix from model file names to create cleaner table names in 
 
 **Examples:**
 ```
-cl_campaigns.sql       → campaigns
-cl_ad_metrics.sql      → ad_metrics
-ol_unified_ad_metrics.sql → unified_ad_metrics
-bl_client_performance_dashboard.sql → client_performance_dashboard
+cl_campaigns → campaigns
+cl_ad_metrics → ad_metrics
+ol_unified_ad_metrics → unified_ad_metrics
+bl_client_performance_dashboard → client_performance_dashboard
 ```
 
 **Rules:**
@@ -77,7 +78,7 @@ Model: cl_campaigns.sql with schema: cl
 ```
 mawave_dbt_project/
 ├── models/
-│   ├── cl/              # Cleansing Layer
+│   ├── cl/# Cleansing Layer
 │   │   ├── cl_ad_metrics.sql
 │   │   ├── cl_campaigns.sql
 │   │   ├── cl_clients.sql
@@ -85,11 +86,11 @@ mawave_dbt_project/
 │   │   ├── cl_projects.sql
 │   │   ├── cl_social_metrics.sql
 │   │   └── cl_time_tracking.sql
-│   ├── ol/              # Operational Layer
+│   ├── ol/# Operational Layer
 │   │   ├── ol_unified_ad_metrics.sql
 │   │   ├── ol_client_projects_with_time.sql
 │   │   └── ol_campaign_profitability.sql
-│   └── bl/              # Business Layer
+│   └── bl/# Business Layer
 │       ├── bl_client_performance_dashboard.sql
 │       ├── bl_resource_utilization.sql
 │       └── bl_monthly_campaign_cohorts.sql
@@ -103,7 +104,6 @@ Before you begin, ensure you have the following installed:
 
 - **Python 3.9+** - [Download Python](https://www.python.org/downloads/)
 - **Google Cloud Account** - [Sign up for GCP](https://cloud.google.com/)
-- **BigQuery Project** - Create a GCP project with BigQuery enabled
 - **Git** - [Install Git](https://git-scm.com/downloads)
 
 ---
@@ -114,7 +114,6 @@ Before you begin, ensure you have the following installed:
 
 ```bash
 git clone <repository-url>
-cd mawave_dbt_project
 ```
 
 ### Step 2: Create a Python Virtual Environment
@@ -133,11 +132,12 @@ dbt_venv\Scripts\activate
 
 You should see `(dbt_venv)` appear in your terminal prompt.
 
-### Step 3: Install dbt with BigQuery Adapter
+### Step 3: Install dbt with BigQuery Adapter & requirements.txt
 
 ```bash
 pip install --upgrade pip
 pip install dbt-bigquery
+pip install -r requirements.txt
 ```
 
 Verify installation:
@@ -407,35 +407,4 @@ This project includes:
 2. **Data Quality Assessment Report** documenting data issues
 3. **Stakeholder Management Document** defining business requirements
 4. **dbt Tests** for data quality validation
-5. **Documentation** via dbt docs
-
----
-
-## Key Business Layer Models
-
-### bl_client_performance_dashboard
-Client-level profitability overview combining campaign revenue, ad spend, and internal labor costs.
-
-**Key Metrics:**
-- Total campaigns, active campaigns
-- Total ad spend and revenue
-- Net profit and profit margins
-- Internal costs and project budgets
-
-### bl_resource_utilization
-Employee allocation analysis showing time spent per client and productivity metrics.
-
-**Key Metrics:**
-- Total hours per client
-- Client time allocation percentage
-- Average hourly rate
-- Total internal cost
-
-### bl_monthly_campaign_cohorts
-Monthly cohort analysis with MoM growth tracking and performance classification.
-
-**Key Metrics:**
-- Monthly campaign counts
-- ROAS, CTR, CVR averages
-- Revenue and spend growth rates
-- Profitability status classification
+5. **Documentation** via dbt docs & yml files
