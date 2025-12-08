@@ -22,7 +22,7 @@ employee_client_time AS (
         MAX(tt.report_date)                                             AS last_work_date
 
     FROM import_cl_time_tracking tt
-    GROUP BY tt.employee_id, tt.client_id
+    GROUP BY 1, 2
 ),
 
 /* Total hours by employee across all clients */
