@@ -21,7 +21,7 @@ client_campaign_summary AS (
         SUM(total_conversions)                                                      AS total_conversions,
         SUM(total_internal_cost)                                                    AS total_internal_cost,
         SUM(total_cost)                                                             AS total_cost,
-        SUM(gross_profit)                                                           AS total_profit,
+        SUM(gross_profit)                                                           AS total_gross_profit,
         AVG(profit_margin_pct)                                                      AS avg_profit_margin_pct
     
     FROM import_ol_campaign_profitability
@@ -61,7 +61,7 @@ SELECT
     /* COST & PROFITABILITY */
     COALESCE(cs.total_internal_cost, 0)         AS total_internal_cost,
     COALESCE(cs.total_cost, 0)                  AS total_cost,
-    COALESCE(cs.total_profit, 0)                AS total_profit,
+    COALESCE(cs.total_gross_profit, 0)          AS total_gross_profit,
     cs.avg_profit_margin_pct,
     
     /* PROJECT METRICS */
@@ -77,9 +77,9 @@ SELECT
     END AS client_status,
     
     CASE
-        WHEN cs.total_profit > 0 THEN 'Profitable'
-        WHEN cs.total_profit = 0 THEN 'Break-even'
-        WHEN cs.total_profit < 0 THEN 'Loss-making'
+        WHEN cs.total_gross_profit > 0 THEN 'Profitable'
+        WHEN cs.total_gross_profit = 0 THEN 'Break-even'
+        WHEN cs.total_gross_profit < 0 THEN 'Loss-making'
         ELSE 'No Data'
     END AS profitability_status
 

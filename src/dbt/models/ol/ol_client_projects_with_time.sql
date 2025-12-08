@@ -4,8 +4,8 @@
     tags = ["ol", "projects"]
 ) }}
 
-WITH import_il_projects AS (SELECT * FROM {{ ref('cl_projects') }}),
-import_il_clients AS (SELECT * FROM {{ ref('cl_clients') }})
+WITH import_cl_projects AS (SELECT * FROM {{ ref('cl_projects') }}),
+import_cl_clients AS (SELECT * FROM {{ ref('cl_clients') }})
 
 SELECT
 
@@ -18,7 +18,7 @@ SELECT
     c.secondary_industry,
     c.country,
     
-    /* PROJECT TINELINE */
+    /* PROJECT TIMELINE */
     p.project_start_date,
     p.project_end_date,
     DATE_DIFF(p.project_end_date, p.project_start_date, DAY)                        AS project_duration_days,
@@ -35,7 +35,7 @@ SELECT
         WHEN CURRENT_DATE() > p.project_end_date THEN 'Completed'
     END AS project_status
 
-FROM import_il_projects p
-JOIN import_il_clients c 
+FROM import_cl_projects p
+JOIN import_cl_clients c 
     ON p.client_id = c.client_id
 ORDER BY p.project_id

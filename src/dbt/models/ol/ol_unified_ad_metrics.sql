@@ -62,4 +62,4 @@ JOIN import_cl_clients c
     ON am.client_id = c.client_id
 /* Filtering on default attribution window */ 
 WHERE am.attribution_window = '7d_click'
-ORDER BY 1, 3
+ORDER BY report_date, campaign_id

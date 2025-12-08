@@ -4,7 +4,7 @@
     tags = ["cl", "ad_metrics"]
 ) }}
 
-WITH import_ad_metrics AS (SELECT * FROM {{ source('csv', 'ad_metrics') }})
+WITH import_il_ad_metrics AS (SELECT * FROM {{ source('csv', 'ad_metrics') }})
 
 SELECT
 
@@ -33,4 +33,4 @@ SELECT
     CAST(cpa AS NUMERIC)                        AS cpa,
     CAST(roas AS NUMERIC)                       AS roas
 
-FROM import_ad_metrics
+FROM import_il_ad_metrics

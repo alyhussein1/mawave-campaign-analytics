@@ -4,9 +4,7 @@
     tags = ["cl", "campaigns"]
 ) }}
 
-WITH import_il_campaigns AS (
-    SELECT * FROM {{ source('csv', 'campaigns') }}
-)
+WITH import_il_campaigns AS (SELECT * FROM {{ source('csv', 'campaigns') }})
 
 SELECT
 
