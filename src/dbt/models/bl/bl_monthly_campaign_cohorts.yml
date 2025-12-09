@@ -35,12 +35,6 @@ models:
         description: "Total clicks across all campaigns for the client in this month."
       - name: total_conversions
         description: "Total conversions across all campaigns for the client in this month."
-      - name: avg_ctr
-        description: "Average click-through rate across all campaigns for the client in this month."
-      - name: avg_cvr
-        description: "Average conversion rate across all campaigns for the client in this month."
-      - name: avg_roas
-        description: "Average return on ad spend across all campaigns for the client in this month."
       - name: profit
         description: "Total revenue minus total spend for the month."
       - name: profit_margin_pct
@@ -53,5 +47,3 @@ models:
         description: "Month-over-month percentage change in total conversions."
       - name: profitability_status
         description: "Profitability classification for the month. Values: Profitable, Break-even, Loss-making."
-      - name: performance_cohort
-        description: "Performance cohort based on avg_roas. Values: High Performer, Average Performer, Low Performer."

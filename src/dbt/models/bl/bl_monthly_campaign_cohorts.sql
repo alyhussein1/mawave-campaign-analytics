@@ -19,10 +19,7 @@ monthly_metrics AS (
         SUM(revenue_eur)                AS total_revenue,
         SUM(impressions)                AS total_impressions,
         SUM(clicks)                     AS total_clicks,
-        SUM(conversions)                AS total_conversions,
-        AVG(ctr)                        AS avg_ctr,
-        AVG(cvr)                        AS avg_cvr,
-        AVG(roas)                       AS avg_roas
+        SUM(conversions)                AS total_conversions
 
     FROM import_ol_unified_ad_metrics
     GROUP BY client_id, client_name, primary_industry, DATE_TRUNC(report_date, MONTH)
@@ -59,13 +56,9 @@ SELECT
     total_clicks,
     total_conversions,
     
-    /* PERFORMANCE METRICS */
-    avg_ctr,
-    avg_cvr,
-    avg_roas,
-    
     /* PROFITABILITY */
     total_revenue - total_spend AS profit,
+
     CASE
         WHEN total_spend > 0
         THEN (total_revenue - total_spend) / total_spend * 100
@@ -96,13 +89,7 @@ SELECT
         WHEN total_revenue - total_spend > 0 THEN 'Profitable'
         WHEN total_revenue - total_spend = 0 THEN 'Break-even'
         ELSE 'Loss-making'
-    END AS profitability_status,
-    
-    CASE
-        WHEN avg_roas >= 3 THEN 'High Performer'
-        WHEN avg_roas >= 1.5 THEN 'Average Performer'
-        ELSE 'Low Performer'
-    END AS performance_cohort
+    END AS profitability_status
 
 FROM monthly_with_lag
 ORDER BY client_id, month DESC
