@@ -8,13 +8,13 @@ WITH import_il_campaigns AS (SELECT * FROM {{ source('csv', 'campaigns') }})
 
 SELECT
 
-    /* CAMPAIGN TIMELINE */
-    DATE(start_date)                        AS start_date,
-
     /* CAMPAIGN & CLIENT IDENTIFIERS */
     CAST(campaign_id AS STRING)             AS campaign_id,
     CAST(client_id AS STRING)               AS client_id,
     client_name,
+
+    /* CAMPAIGN TIMELINE */
+    DATE(start_date)                        AS start_date,
 
     /* CAMPAIGN ATTRIBUTES */
     campaign_name,
