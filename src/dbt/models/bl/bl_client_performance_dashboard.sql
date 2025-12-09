@@ -21,8 +21,7 @@ client_campaign_summary AS (
         SUM(total_conversions)                                                      AS total_conversions,
         SUM(total_internal_cost)                                                    AS total_internal_cost,
         SUM(total_cost)                                                             AS total_cost,
-        SUM(gross_profit)                                                           AS total_gross_profit,
-        AVG(profit_margin_pct)                                                      AS avg_profit_margin_pct
+        SUM(gross_profit)                                                           AS total_gross_profit
     
     FROM import_ol_campaign_profitability
     GROUP BY client_id
@@ -62,7 +61,6 @@ SELECT
     COALESCE(cs.total_internal_cost, 0)         AS total_internal_cost,
     COALESCE(cs.total_cost, 0)                  AS total_cost,
     COALESCE(cs.total_gross_profit, 0)          AS total_gross_profit,
-    cs.avg_profit_margin_pct,
     
     /* PROJECT METRICS */
     COALESCE(ps.total_projects, 0)              AS total_projects,

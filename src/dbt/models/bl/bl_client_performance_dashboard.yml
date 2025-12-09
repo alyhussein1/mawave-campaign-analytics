@@ -34,8 +34,6 @@ models:
         description: "Sum of total ad spend and total internal cost for the client."
       - name: total_profit
         description: "Total profit from campaigns after deducting costs."
-      - name: avg_profit_margin_pct
-        description: "Average profit margin percentage across all campaigns for the client."
       - name: total_projects
         description: "Total number of projects associated with the client."
       - name: active_projects
